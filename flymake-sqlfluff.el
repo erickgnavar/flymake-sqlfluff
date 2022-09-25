@@ -21,7 +21,7 @@
   :type 'string)
 
 (defvar flymake-sqlfluff--dialect-options '("ansi" "athena" "bigquery" "clickhouse" "databricks" "db2" "exasol" "hive" "mysql" "oracle" "postgres" "redshift" "snowflake" "soql" "sparksql" "sqlite" "teradata" "tsql")
-  "List of suported dialects.")
+  "List of supported dialects.")
 
 (defcustom flymake-sqlfluff-dialect "postgres"
   "List of possible dialect to be checked."
