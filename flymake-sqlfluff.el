@@ -55,7 +55,7 @@
 
 (defun flymake-sqlfluff--check-buffer ()
   "Generate a list of diagnostics for the current buffer."
-  (flatten-list (mapcar #'(lambda (node) (mapcar #'flymake-sqlfluff-process-item (gethash "violations" node))) (json-parse-string (flymake-sqlfluff--get-raw-report)))))
+  (flatten-list (mapcar (lambda (node) (mapcar #'flymake-sqlfluff-process-item (gethash "violations" node))) (json-parse-string (flymake-sqlfluff--get-raw-report)))))
 
 (defun flymake-sqlfluff--get-position (line column)
   "Calculate position for the given LINE and COLUMN."
