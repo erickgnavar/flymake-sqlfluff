@@ -1,4 +1,4 @@
-;;; flymake-sqlfluff.el --- A flymake handler for sqlfluff-mode files
+;;; flymake-sqlfluff.el --- A flymake plugin for SQL files using sqlfluff
 
 ;; Copyright © 2022 Erick Navarro
 ;; Author: Erick Navarro <erick@navarro.io>
