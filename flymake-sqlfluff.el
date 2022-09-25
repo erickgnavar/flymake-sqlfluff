@@ -69,7 +69,7 @@
   "Run sqlfluff on the current buffer and return a raw report."
   (let ((temp-file (concat (make-temp-file "sqlfluff") ".sql")))
     (write-region (point-min) (point-max) temp-file nil 'quiet)
-    (shell-command-to-string (format "%s lint --dialect %s -f json %s" flymake-sqlfluff-program flymake-sqlfluff-dialect temp-file))))
+    (shell-command-to-string (format "%s lint --dialect %s -f json %s" (shell-quote-argument flymake-sqlfluff-program) (shell-quote-argument flymake-sqlfluff-dialect) temp-file))))
 
 (provide 'flymake-sqlfluff)
 ;;; flymake-sqlfluff.el ends here
