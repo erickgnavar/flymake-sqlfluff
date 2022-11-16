@@ -49,21 +49,13 @@
   "Build a flymake diagnostic using ITEM data."
   (let* ((line (gethash "line_no" item))
          (column (gethash "line_pos" item))
-         (error-point (flymake-sqlfluff--get-position line column))
+         (region (flymake-diag-region (current-buffer) line column))
          (description (gethash "description" item)))
-    (flymake-make-diagnostic (current-buffer) error-point (1+ error-point) :error description)))
+    (flymake-make-diagnostic (current-buffer) (car region) (cdr region) :error description)))
 
 (defun flymake-sqlfluff--check-buffer ()
   "Generate a list of diagnostics for the current buffer."
   (flatten-list (mapcar (lambda (node) (mapcar #'flymake-sqlfluff-process-item (gethash "violations" node))) (json-parse-string (flymake-sqlfluff--get-raw-report)))))
-
-(defun flymake-sqlfluff--get-position (line column)
-  "Calculate position for the given LINE and COLUMN."
-  (save-excursion
-    (goto-char (point-min))
-    (forward-line (1- line))
-    (move-to-column column)
-    (point)))
 
 (defun flymake-sqlfluff--get-raw-report ()
   "Run sqlfluff on the current buffer and return a raw report."
