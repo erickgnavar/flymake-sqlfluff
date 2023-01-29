@@ -59,9 +59,12 @@
 
 (defun flymake-sqlfluff--get-raw-report ()
   "Run sqlfluff on the current buffer and return a raw report."
-  (let ((temp-file (concat (make-temp-file "sqlfluff") ".sql")))
-    (write-region (point-min) (point-max) temp-file nil 'quiet)
-    (shell-command-to-string (format "%s lint --dialect %s -f json %s" (shell-quote-argument flymake-sqlfluff-program) (shell-quote-argument flymake-sqlfluff-dialect) temp-file))))
+  (let ((code-content (buffer-substring-no-properties (point-min) (point-max))))
+    (with-temp-buffer
+      (insert code-content)
+      ;; run command and replace temp buffer content with command output
+      (call-process-region (point-min) (point-max) (shell-quote-argument flymake-sqlfluff-program) t t nil "lint" "--dialect" (shell-quote-argument flymake-sqlfluff-dialect) "--format" "json" "-")
+      (buffer-substring-no-properties (point-min) (point-max)))))
 
 (provide 'flymake-sqlfluff)
 ;;; flymake-sqlfluff.el ends here
