@@ -49,9 +49,11 @@
   "Build a flymake diagnostic using ITEM data."
   (let* ((line (gethash "line_no" item))
          (column (gethash "line_pos" item))
+         (code (gethash "code" item))
          (region (flymake-diag-region (current-buffer) line column))
-         (description (gethash "description" item)))
-    (flymake-make-diagnostic (current-buffer) (car region) (cdr region) :error description)))
+         (description (gethash "description" item))
+         (type (if (string= code "PRS") :error :warning)))
+    (flymake-make-diagnostic (current-buffer) (car region) (cdr region) type (concat code ": " description))))
 
 (defun flymake-sqlfluff--check-buffer ()
   "Generate a list of diagnostics for the current buffer."
