@@ -115,8 +115,8 @@
 
 (defun flymake-sqlfluff-process-item (item)
   "Build a flymake diagnostic using ITEM data."
-  (let* ((line (gethash "start_line_no" item))
-         (column (gethash "start_line_pos" item))
+  (let* ((line (gethash "start_line_no" item (gethash "line_no" item)))
+         (column (gethash "start_line_pos" item (gethash "line_pos" item)))
          (code (gethash "code" item))
          (region (flymake-diag-region (current-buffer) line column))
          (description (gethash "description" item))
