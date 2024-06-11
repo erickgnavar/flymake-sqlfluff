@@ -77,7 +77,7 @@
                   (shell-quote-argument flymake-sqlfluff-dialect)
                   "--format"
                   "json"
-                  "-")
+                  buffer-file-name)
         :sentinel
         (lambda (proc _event)
           ;; Check that the process has indeed exited, as it might
